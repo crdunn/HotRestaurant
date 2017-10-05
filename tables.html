@@ -1,0 +1,86 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Tables Page</title>
+    
+        <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    
+    
+    </head>
+    <body>
+    
+    <div class="container">
+    
+      <div class="jumbotron">
+        <h1 class="text-center"><span class="glyphicon glyphicon-fire"></span> Hot Restaurant</h1>
+        <hr>
+        <h2 class="text-center"> Book your seat before they all are gone!</h2>
+        <br>
+    
+        <div class="text-center">
+          <a href="/tables"><button type="button" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-list-alt"></span> View Tables</button></a>
+          <a href="/reserve"><button type="button" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-credit-card"></span> Make Reservation</button></a>
+        </div>
+    
+      </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong>Current Reservations</strong></h3>
+          </div>
+          <div class="panel-body">
+            <div class="reservation_well">
+            
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong>Waiting List</strong></h3>
+          </div>
+          <div class="panel-body">
+            <div class="waitlist_well">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="container">
+      <span class="text-muted"> <a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a></span>
+    </div>
+  </footer>
+  <script type="text/javascript">
+      $.get("/api/new", function(data) {
+        console.log(data);
+        if(data[0].length) {
+          for (var i = 0; i < data[0].length; i++) {
+            $(".reservation_well").show();
+            var innerReservations = data[0];
+            var newReservation = $("<div>");
+            newReservation.addClass("well");
+            newReservation.html("<h2>" + innerReservations[i].id + " | " + innerReservations[i].name + "</h2>");
+            $(".reservation_well").append(newReservation);
+          }
+        }
+        if(data[1].length) {
+          for (var i = 0; i < data[1].length; i++) {
+            $(".reservation_well").show();
+            var innerWaitlist = data[1];
+            var newReservation = $("<div>");
+            newReservation.addClass("well");
+            newReservation.html("<h2>" + innerWaitlist[i].id + " | " + innerWaitlist[i].name + "</h2>");
+            $(".waitlist_well").append(newReservation);
+          }
+        }
+      });
+  </script>
+    
+    
+</body>
+</html>
